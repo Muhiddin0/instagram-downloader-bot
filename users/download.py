@@ -1,13 +1,14 @@
 
+import requests
 from loader import app
 from utils import buttons, texts
 from downloader import Loader
 from pyrogram import filters
 from pyrogram.types import Message
-
+from pyrogram import Client
 import asyncio
 
-async def start_task(app, message:Message):
+async def start_task(app:Client, message:Message):
 
     user_id = message.from_user.id
     url = message.text
@@ -28,7 +29,9 @@ async def start_task(app, message:Message):
         text='⏳'
     )
 
+    
     try:
+        requests.get(url)
         data = Loader.instagram(url)
     except:
         await loading_message.edit_text(text='⭕️ Xatolik yuz berdi')
