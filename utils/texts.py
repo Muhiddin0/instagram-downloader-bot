@@ -10,8 +10,6 @@ Yuklab olishda yordam beraman
 download = """
 <a href="{}">{}</a>
 
-<b>@instazam_yuklovchibot</b>
-<b>@proCoder2005</b>
 """
 
 chanel = """
@@ -28,4 +26,11 @@ Siz kanalga obuna bo'lmaganisiz
 1) 📺 Pastdagi kanalga obuna bo'ling
 2) ✅ Tekshirish tugmasini bosing
 3) 🎉 Foydalaning
+"""
+
+succesfuly_download = """
+😊 @instazam_yuklovchibot botidan foydalanganingiz
+uchun rahmat 👍
+
+🧑‍💻 Admin: @ProCoder2005
 """

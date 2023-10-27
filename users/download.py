@@ -39,9 +39,15 @@ async def start_task(app, message:Message):
         chat_id=user_id,
         message_ids=loading_message.id
     )
-    
-    data_items = data['data']['items'][-1]['meta']
-    caption = texts.download.format(data_items['sourceUrl'], data_items['title'])
+
+    data_items = data['data']['items'][-1]
+    if 'meta' in data_items: 
+        caption = texts.download.format(
+            data_items['meta']['sourceUrl'],
+            data_items['meta']['title']
+        )
+        caption += texts.succesfuly_download
+    else:caption = texts.succesfuly_download
 
     for i in data['data']['items']:
         cdn:str = i['urls'][-1]['url']
