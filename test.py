@@ -5,3 +5,5 @@ except urllib2.HTTPError, e:
     print(e.code)
 except urllib2.URLError, e:
     print(e.args)
+
+str().find('')

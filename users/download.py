@@ -1,4 +1,5 @@
 
+import os
 import requests
 from loader import app
 from utils import buttons, texts
@@ -38,11 +39,10 @@ async def start_task(app:Client, message:Message):
         return
     
     
-    await app.delete_messages(
-        chat_id=user_id,
-        message_ids=loading_message.id
+    await loading_message.edit_text(
+        text='yuklanmoqda...'
     )
-
+    
     data_items = data['data']['items'][-1]
     if 'meta' in data_items: 
         caption = texts.download.format(
@@ -53,12 +53,38 @@ async def start_task(app:Client, message:Message):
     else:caption = texts.succesfuly_download
 
     for i in data['data']['items']:
-        cdn:str = i['urls'][-1]['url']
+        response = requests.get(i['urls'][-1]['url'])
+        content_type:str = response.headers.get('Content-Type')
+
+        if content_type == 'image/jpeg':
+            save_path = 'user-medias/{}_{}.png'.format(user_id, message.id)
+            with open(save_path, 'wb') as file:
+                file.write(response.content)
+                
+            await app.send_photo(
+                chat_id=user_id,
+                photo=save_path,
+                caption=caption,
+            )
+            return
+
+
+        save_path = 'user-medias/{}_{}.mp4'.format(user_id, message.id)
+        with open(save_path, 'wb') as file:
+            file.write(response.content)
+
         await app.send_video(
             chat_id=user_id,
-            video=cdn,
+            video=save_path,
             caption=caption,
         )
+    
+    await app.edit_message_text(
+        chat_id=user_id,
+        message_ids=loading_message.id
+    )
+    
+    os.remove(save_path)
 
 
 @app.on_message(filters.text)
