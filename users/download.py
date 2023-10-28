@@ -69,7 +69,7 @@ async def start_task(app:Client, message:Message):
             return
 
 
-        save_path = 'user-medias/{}_{}.mp4'.format(user_id, message.id)
+        save_path = '{}_{}.mp4'.format(user_id, message.id)
         with open(save_path, 'wb') as file:
             file.write(response.content)
 
@@ -83,7 +83,7 @@ async def start_task(app:Client, message:Message):
         chat_id=user_id,
         message_ids=loading_message.id
     )
-    
+
     os.remove(save_path)
 
 
