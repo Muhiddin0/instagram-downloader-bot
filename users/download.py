@@ -60,26 +60,15 @@ async def start_task(app:Client, message:Message):
             save_path = 'user-medias/{}_{}.png'.format(user_id, message.id)
             with open(save_path, 'wb') as file:
                 file.write(response.content)
-                
-            await app.send_photo(
-                chat_id=user_id,
-                photo=save_path,
-                caption=caption,
-            )
-            return
+            await app.send_photo(chat_id=user_id,photo=save_path,caption=caption)
+        else:
+            save_path = '{}_{}.mp4'.format(user_id, message.id)
+            with open(save_path, 'wb') as file:
+                file.write(response.content)
 
-
-        save_path = '{}_{}.mp4'.format(user_id, message.id)
-        with open(save_path, 'wb') as file:
-            file.write(response.content)
-
-        await app.send_video(
-            chat_id=user_id,
-            video=save_path,
-            caption=caption,
-        )
+            await app.send_video(chat_id=user_id, video=save_path,caption=caption)
     
-    await app.edit_message_text(
+    await app.delete_messages(
         chat_id=user_id,
         message_ids=loading_message.id
     )
