@@ -57,7 +57,7 @@ async def start_task(app:Client, message:Message):
         content_type:str = response.headers.get('Content-Type')
 
         if content_type == 'image/jpeg':
-            save_path = 'user-medias/{}_{}.png'.format(user_id, message.id)
+            save_path = '{}_{}.png'.format(user_id, message.id)
             with open(save_path, 'wb') as file:
                 file.write(response.content)
             await app.send_photo(chat_id=user_id,photo=save_path,caption=caption)
